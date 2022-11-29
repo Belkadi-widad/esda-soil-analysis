@@ -1,0 +1,178 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: #f2f2f2f2;
+}
+
+.banner {
+  padding-top: 2%;
+  font-style: italic;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu {
+  margin-left: auto;
+  margin-right: auto;
+  width: 67%;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.era-slider {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.app-page {
+  height: fit-content;
+}
+
+.home {
+  padding: 5%;
+}
+
+.home a:link {
+  color: gray;
+}
+
+.home a:visited {
+  color: black;
+}
+
+.four.columns {
+  width: 30.6666666667%;
+}
+
+.eight.columns {
+  width: 65.3333333333%;
+}
+
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.dataset-table-settings {
+  padding: 10px;
+  margin-bottom: 30px;
+  /* background: rgb(245, 247, 249);
+  border: 1px solid #e1e1e1; */
+  background: #f5f7f9;
+  border: 1px solid #e1e1e1;
+}
+
+.choropleth-settings {
+  margin: 10px 30px 10px 35px;
+  padding: 15px;
+  background: #f5f7f9;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+}
+
+.dataset-table-settings > p {
+  margin: 0px 0px 20px 10px;
+}
+
+.dataset-table-settings > div {
+  margin: 0px 40px;
+}
+
+.dataset-table-settings label {
+  display: flex;
+  /* justify-content: space-around; */
+  margin: 10px 0px;
+}
+
+.dataset-table-settings label div {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 12px;
+  color: grey;
+  width: 80px;
+}
+
+.dataset-table-settings input {
+  height: 30px;
+  /* width: 55px; */
+  width: 100%;
+  font-size: 12px;
+}
+
+.soil-data-table {
+  height: 368px;
+  overflow: auto;
+}
+
+#data-table td {
+  padding: 5px 15px;
+}
+
+.mini_container {
+  flex: 1;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 2px 2px 2px lightgrey;
+  background: #f5f7f9;
+  border: 1px solid #e1e1e1;
+}
+
+.pretty_container {
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin: 10px;
+  padding: 15px;
+  position: relative;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+.control_label {
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  width: calc(100%-40px);
+  text-align: right;
+}
+
+.checklist label {
+  display: block;
+}
+
+.checklist {
+  padding: 5px;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.dropdown > button {
+  width: 200px;
+}
+
+.radio-button label {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.radio-button {
+  text-align: center;
+}
+
+.map {
+  width: 100%;
+  height: 400px;
+}
+.multi-select .mantine-MultiSelect-values {
+  height: 170px;
+  overflow-y: scroll;
+}
