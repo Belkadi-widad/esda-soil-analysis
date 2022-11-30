@@ -23,5 +23,4 @@ def interactiveMap(mx, column="DOMSOI", schema=None, k=5,   tooltip="DOMSOI", co
                          )
 
     fig.save(f".{path}")
-    print('le path', f".{path}")
     return f".{path}"

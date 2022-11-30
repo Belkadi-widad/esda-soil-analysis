@@ -4,19 +4,8 @@
 # In[2]:
 
 
-from PIL import Image
-import io
-from selenium import webdriver
-import time
-import os
-import matplotlib as mpl
-import pandas as pd
-import geopandas as gpd
-from shapely.geometry import Point
-from shapely.geometry import LineString, shape
 from pysal.lib import weights
 import seaborn
-import pysal
 import numpy
 import matplotlib.pyplot as plt
 import mapclassify
@@ -24,17 +13,13 @@ import folium
 
 # Graphics
 import matplotlib.pyplot as plt
-from pysal.viz import splot
-from splot import esda as esdaplot
 from splot.esda import plot_moran
-import contextily
 
 # Analysis
 from pysal.explore import esda
 from pysal.lib import weights
 from numpy.random import seed
-from data import getDataset, soil_properties, DOM_mapping, countries_fao
-import copy
+from data import getDataset, soil_properties
 
 soil_props_names = ['sand %',
                     'silt %',
@@ -253,7 +238,6 @@ def calculateMoranSI(db, prop,  k=8):
 def plotMoran(moranObjct, path="global-scatter.png"):
     plot = plot_moran(moranObjct)
     # plot[0].save(path)
-    print(path)
     plt.savefig(f".{path}")
     return path
 

@@ -1,8 +1,6 @@
 # import dash and bootstrap components
 import dash
 import dash_bootstrap_components as dbc
-
-from dash_extensions.enrich import Output, DashProxy, Input, MultiplexerTransform
 from data import getDataset
 
 # app = DashProxy(__name__,

@@ -2,7 +2,7 @@
 import os
 
 import dash_bootstrap_components as dbc
-import dash_html_components as html
+from dash import html
 
 app_name = os.getenv("DASH_APP_PATH", "/dash-soil-analysis")
 menu_items = [{"title": "Dataset overview", "path": f"{app_name}/overview"},

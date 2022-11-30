@@ -1,22 +1,12 @@
-import plotly.figure_factory as ff
-import plotly.express as px
-from plotly.tools import mpl_to_plotly
-from IPython. display import Image
-import geopandas as gpd
 import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.graph_objs as go
+from dash import html
 import pandas as pd
 from data import soil_properties, from_json_togeopd
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 from app import app, soil_data
-from graphs import Histogram, BoxPlot, ScatterPlot, BoxPlotMultipleY, CorrelationHeatMap
-from components.select_multiselection import selectMultiSelection
 from components.card import MapCard, Card
 from Spatial_analysis import calculateMoranSI, calculateLISA, plotMoran
-import matplotlib.pyplot as plt
 from components.maps import interactiveMap
 
 # from splot import esda as esdaplot
@@ -25,16 +15,6 @@ soil_prop = 'OC % topsoil'
 
 db = soil_data.to_crs(epsg=3857).dropna(how='all')
 tooltip = ['DOMSOI', soil_prop]
-
-
-def plotMoranRefKde(hist_data, I, EI,  group_labels):
-
-    fig = ff.create_distplot(hist_data, group_labels)
-    fig.add_vrect(x0=I, x1=I,  line_color='r')
-    fig.add_vrect(x0=EI, x1=I)
-    # fig.add_vrect(x0=0.9, x1=2)
-
-    return fig
 
 
 def labelClusterLisaMap(lisa, significancePercent):
@@ -47,7 +27,6 @@ def labelClusterLisaMap(lisa, significancePercent):
     spot_labels = ['0 ns', '1 hot spot',
                    '2 doughnut', '3 cold spot', '4 diamond']
     spot_labels = ['0 Non-Significant', '1 HH', '2 LH', '3 LL', '4 HL']
-    print(set(spots))
     labels = [spot_labels[i] for i in spots]
     return labels
 
@@ -185,8 +164,6 @@ correlationLayout = html.Div(
     ]
 )
 
-print('reload component')
-
 
 @ app.callback(
     [Output("moran-value", "children"),
@@ -197,7 +174,6 @@ print('reload component')
      Input("k-corr", "value")]
 )
 def display_corre_global(soil_prop_cond, data, k):
-    print('boucle global?')
     if data is None or len(data) == 0:
         return "Error occured", None
     soil_data = from_json_togeopd(data)
@@ -220,10 +196,8 @@ def display_corre_global(soil_prop_cond, data, k):
     Input('soil-data-value', 'data')
 )
 def display_corre(significancePercent, k, prop, data):
-    print('boucle local?')
     if data is None or len(data) == 0:
         return None, None, None, None
-    # print(data)
     soil_data = from_json_togeopd(data)
     if len(soil_data) > 0:
         db = soil_data.to_crs(epsg=3857).dropna(how='all')
@@ -243,7 +217,6 @@ def display_corre(significancePercent, k, prop, data):
     Output("title-global-spatial-corr", "children"),
     Input("soil-prop-corr", "value"))
 def change_titles(prop):
-    print('boucle title?')
     titleLocal = f"Local spatial autocorrelation for {prop}"
     titleMoran = f"Morans'I for {prop}"
     titleGlobal = f"Global spatial autocorrelation for {prop}"

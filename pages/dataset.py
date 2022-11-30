@@ -1,29 +1,15 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Apr  4 17:43:39 2019
-@author: Stephen Day
-"""
-import os
-import pathlib
-import statistics
-from collections import OrderedDict
+
 import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
-
-import pathlib as pl
-import dash
-import dash_table
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.graph_objs as go
-import pandas as pd
+from dash import dash_table
+from dash import dcc
+from dash import html
 from dash.dependencies import Input, Output, State
 from app import app, soil_data
-from data import getDataset, soil_properties, DOM_mapping, from_json_togeopd
+from data import soil_properties, DOM_mapping, from_json_togeopd
 from components.card import Card
 from graphs import Histogram
-import app as app1
-import geopandas as gpd
 from components.card import GraphCard
 
 table_header_style = {
@@ -88,18 +74,22 @@ dataset_table_params = dbc.Col(
     width=3, className="dataset-table-settings"
 
 )
+unique_fao = f"{len(soil_data.FAOSOIL.unique())}"
+unique_dom = f"{len(soil_data.DOMSOI.unique())}"
+freq_DOM = f"{soil_data['DOMSOI'].mode()[0]} : {DOM_mapping[soil_data['DOMSOI'].mode()[0]]} "
+nb_row = f"{len(soil_data)} row"
 dataset_overview = dbc.Row(
-    [dbc.Col(Card(id1="nb_rows", title="Number of rows")),
-     dbc.Col(Card(id1="unique_fao", title="Unique FAOSOIL")),
-     dbc.Col(Card(id1="unique_dom", title="Unique DOMSOIL")),
-     dbc.Col(Card(id1="freq_DOM", title="Most frequent DOMSOIL"))
+    [dbc.Col(Card(id1="nb_rows", title="Number of rows", value1=nb_row)),
+     dbc.Col(Card(id1="unique_fao", title="Unique FAOSOIL", value1=unique_fao)),
+     dbc.Col(Card(id1="unique_dom", title="Unique DOMSOIL", value1=unique_dom)),
+     dbc.Col(Card(id1="freq_DOM", title="Most frequent DOMSOIL", value1=freq_DOM))
      ], style={'margin-bottom': '20px'}
 )
 dataset_histograms = dbc.Row(
     [
-        GraphCard(id="histo_country", title="Histogram of Countries", description="", graph=Histogram(
+        GraphCard(id="histo_country", title="Breakdown by Countries", description="", graph=Histogram(
             soil_data, x="DOMSOI", sorted='total descending'), paramsComponent=None,  col_style={'width': '48%'}),
-        GraphCard(id="histo_dom", paramsComponent=None, title="Histogram of DOMSOI", description="",
+        GraphCard(id="histo_dom", paramsComponent=None, title="Breakdown by DOMSOI", description="",
                   graph=Histogram(soil_data, order_labels=["ALGERIA",
                                                            "MOROCCO", "TUNISIA", "LIBYA", "MAURITANIA"], sorted='total descending'),  col_style={'width': '48%'})
     ]

@@ -1,46 +1,16 @@
-import plotly.express as px
-import geopandas as gpd
 from data import soil_properties, from_json_togeopd
 import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.graph_objs as go
-import pandas as pd
-from dash.dependencies import Input, Output, State
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
 from app import app, soil_data
-from graphs import Histogram, BoxPlot, ScatterPlot, BoxPlotMultipleY, CorrelationHeatMap
-from components.select_multiselection import selectMultiSelection
-from Spatial_analysis import all_classifiers, BoxMap
+from graphs import BoxPlot
+from Spatial_analysis import BoxMap
 import matplotlib.pyplot as plt
 from components.maps import interactiveMap
 from components.card import MapCard
 from dash.exceptions import PreventUpdate
-
-# def Choropleth_DOMSOIL():
-#     fig = px.choropleth_mapbox(soil_data,
-#                                geojson=soil_data.geometry,
-#                                locations=soil_data.index,
-#                                color="DOMSOI",
-#                                mapbox_style="carto-positron",
-#                                zoom=8,
-#                                width=800,
-#                                height=500)
-#     #fig.update_geos(fitbounds="locations", visible=False)
-#     #fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-
-#     return fig
-
-
-# def interactiveSoilPropMap(geo_df, soil_prop):
-#     fig = px.choropleth_mapbox(geo_df,
-#                                geojson=geo_df.geometry,
-#                                locations=geo_df.index,
-#                                color=soil_prop,
-#                                #center={"lat": 45.5517, "lon": -73.7073},
-#                                mapbox_style="carto-positron",
-#                                zoom=8.5)
-#     return fig
 
 
 soil_prop = 'OC % topsoil'
@@ -184,7 +154,6 @@ def display_map_clasifier(soil_prop, classifierOption, k, colorPalette, data):
     if data is None or len(data) == 0:
         return None, f"Map classifier to classify {soil_prop}"
     soil_data = from_json_togeopd(data)
-    print(soil_data.DOMSOI.unique())
     if len(soil_data) > 0:
         if k is not None and classifierOption is not None and soil_prop is not None:
             choroClassifier = open(interactiveMap(mx=soil_data, column=soil_prop, k=k, color_palette=colorPalette,   schema=classifierOption,

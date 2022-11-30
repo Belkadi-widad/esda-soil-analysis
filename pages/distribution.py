@@ -5,13 +5,10 @@ Created on Thu Apr  4 17:43:39 2019
 """
 
 
-import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-import plotly.graph_objs as go
-import pandas as pd
-from dash.dependencies import Input, Output, State
+from dash import dcc
+from dash import html
+from dash.dependencies import Input, Output
 from app import app, soil_data
 from data import soil_properties, from_json_togeopd
 from components.card import GraphCard
@@ -320,15 +317,11 @@ def upate_box_plot(x, y, data):
     if data is None or len(data) == 0:
         return None
     soil_data = from_json_togeopd(data)
-    print('len data', len(soil_data))
     if len(soil_data) > 0:
         if x == "None":
-            print('len data dakhal none', len(soil_data), y)
             return BoxPlot(df=soil_data, y=y, x=None)
         else:
-            print('len data dakhal else', len(soil_data), y)
             return BoxPlot(df=soil_data, y=y, x=soil_data[x])
-    print('ha nab3t none')
     return None
 
 
@@ -342,7 +335,6 @@ def update_box_plot_multi(x, y, data):
     if data is None or len(data) == 0:
         return None
     soil_data = from_json_togeopd(data)
-    print('columns ', y)
     if len(soil_data) > 0:
         if('All' in y):
             y.remove('All')

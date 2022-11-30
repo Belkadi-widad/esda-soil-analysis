@@ -1,9 +1,6 @@
 # Dash components, html, and dash tables
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
+from dash import html
 import dash_mantine_components as dmc
-
 # Import Bootstrap components
 import dash_bootstrap_components as dbc
 
@@ -52,8 +49,8 @@ appMenu = html.Div(
 
                 ),
 
-                dbc.Col(html.Button('Filter', id='filter-button',
-                        n_clicks=0, type="button"))
+                dbc.Col(dmc.Button('Filter', id='filter-button',
+                        n_clicks=0))
 
 
             ],
