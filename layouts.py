@@ -37,13 +37,11 @@ appMenu = html.Div(
                 dbc.Col(
                     html.P(
                         style={"text-align": "center",
-                               "justify-self": "right"},
+                               "justify-self": "right", "marginBottom": "0px"},
                         children="And/Or",
-                    ),
-
-                ),
+                    ), style={"margin": "auto"}),
                 dbc.Col(
-                    selectMultiSelection(id="checklist-DOMSOI", label="DOMSOIL", options=list(['All']) + list(DOM_mapping.keys()), value=list(['All']) + list(DOM_mapping.keys()), labels=get_domsoi_items(),
+                    selectMultiSelection(id="checklist-DOMSOI", label="Dominant Soil Unit", options=list(['All']) + list(DOM_mapping.keys()), value=list(['All']) + list(DOM_mapping.keys()), labels=get_domsoi_items(),
 
                                          ),
 

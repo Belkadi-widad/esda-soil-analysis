@@ -2,7 +2,7 @@ import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
 from dash import html
 import pandas as pd
-from data import soil_properties, from_json_togeopd
+from data import soil_properties, from_json_togeopd, description_visualizations
 from dash.dependencies import Input, Output
 from app import app, soil_data
 from components.card import MapCard, Card
@@ -85,13 +85,10 @@ moran_plot = dbc.Row(
     className="justify-content-center")
 
 descComponent = dbc.Row([
-    dbc.Col("""some descrokkeff some descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome descrokkeffsome
-            descrokkeffsome descrokkeffsome descrokkeff descrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome
-            descrokkeffdescrokkeffsome descrokkeffsome descrokkeff descrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome descrokkeffdescrokkeffsome descrokkeffsome
-            descrokkeffdescrokkeffsome descrokkeffsome descrokkeff""", style={
+    dbc.Col(description_visualizations['global-spatial-corr'], style={
         "padding": "16px 42px", "text-align": "justify"}, width=9),
     moran_value_card])
-global_corr_row = MapCard(title=f"Global spatial autocorrelation for {soil_prop}", id_map="global-spatial-corr", paramsComponent=None, description="some desc", column_width=12,
+global_corr_row = MapCard(title=f"Global spatial autocorrelation for {soil_prop}", id_map="global-spatial-corr", paramsComponent=None, description="", column_width=12,
                           descComponent=descComponent, Map=html.Div(
                               [
                                   moran_plot,
@@ -99,7 +96,7 @@ global_corr_row = MapCard(title=f"Global spatial autocorrelation for {soil_prop}
                           )
                           )
 
-local_corr_row = MapCard(title=f"Local spatial autocorrelation for {soil_prop}", id_map="local-corr", paramsComponent=local_params, description="some desc", column_width=12,
+local_corr_row = MapCard(title=f"Local spatial autocorrelation for {soil_prop}", id_map="local-corr", paramsComponent=local_params, description=description_visualizations['local-corr'], column_width=12,
                          Map=dbc.Row(
                              [
                                dbc.Col([
@@ -121,8 +118,8 @@ local_corr_row = MapCard(title=f"Local spatial autocorrelation for {soil_prop}",
                                                width='100%',  height='450px', srcDoc=open("./assets/cluster-map.html").read())], width=6)
                              ]
 
-                         )
-                         )
+)
+)
 
 params_maps = html.Div([
 
@@ -171,7 +168,7 @@ correlationLayout = html.Div(
      ],
     [Input("soil-prop-corr", "value"),
      Input('soil-data-value', 'data'),
-     Input("k-corr", "value")]
+     Input("k-corr", "value")],
 )
 def display_corre_global(soil_prop_cond, data, k):
     if data is None or len(data) == 0:
@@ -181,7 +178,7 @@ def display_corre_global(soil_prop_cond, data, k):
         moran, moransI, _ = calculateMoranSI(soil_data, soil_prop_cond, k=k)
         path = plotMoran(moran, path=app.get_asset_url(
             f"global-graphs-{soil_prop_cond}-{k}.png"))
-        return moransI, path
+        return round(moransI, 2), path
     return "Error occured",  None
 
 

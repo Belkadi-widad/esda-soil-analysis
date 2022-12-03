@@ -40,7 +40,7 @@ def GraphCard(id, title, description, paramsComponent, graph=None, column_width=
         descComponent = html.P(
             description,
             className="control_label",
-            style={"text-align": "justify"},
+            style={"text-align": "justify", "text-align": "center"},
         )
     return dbc.Col(
         # cor_behav,
@@ -71,7 +71,8 @@ def MapCard(title, description, Map,  column_width='auto', paramsComponent=None,
         descComponent = html.P(
             description,
             className="control_label",
-            style={"text-align": "justify"},
+            style={"text-align": "justify",
+                   "text-align": "center", "marginBottom": "10px"},
         )
     return dbc.Col(
         # cor_behav,

@@ -1,4 +1,4 @@
-from data import soil_properties, from_json_togeopd
+from data import soil_properties, from_json_togeopd, description_visualizations
 import dash_mantine_components as dmc
 import dash_bootstrap_components as dbc
 from dash import dcc
@@ -31,7 +31,7 @@ overviewMaps_row = MapCard(title=f"{soil_prop} distribution", description="", pa
                            ), id_map='choro-soil-prop')
 
 
-BoxMap_row = MapCard(title=f"Box map of {soil_prop}", description="", paramsComponent=None,
+BoxMap_row = MapCard(title=f"Box map of {soil_prop}", description=description_visualizations['boxplot_boxmap'], paramsComponent=None,
                      column_width='12',  Map=dbc.Row(
                                   [
                                       dbc.Col([
@@ -42,7 +42,7 @@ BoxMap_row = MapCard(title=f"Box map of {soil_prop}", description="", paramsComp
                                                     ), width='6'
                                       )
                                   ]
-                     ), id_map='box-map')
+), id_map='box-map')
 
 
 map_classifier_params = dbc.Row(
@@ -84,7 +84,7 @@ map_classifier_params = dbc.Row(
 
     ], className="pretty_container")
 
-map_classifiers_row = MapCard(title=f"Map classifier to classify {soil_prop}", description="", paramsComponent=map_classifier_params,
+map_classifiers_row = MapCard(title=f"Map classification by {soil_prop}", description=description_visualizations['map-classifier-choro'], paramsComponent=map_classifier_params,
                               column_width='12',  Map=html.Div(html.Iframe(id="map-classifier-choro", className="map")), id_map='map-classifier-choro')
 
 
@@ -152,14 +152,14 @@ def display_choropleths(soil_prop, data):
 def display_map_clasifier(soil_prop, classifierOption, k, colorPalette, data):
 
     if data is None or len(data) == 0:
-        return None, f"Map classifier to classify {soil_prop}"
+        return None, f"Map classification by {soil_prop}"
     soil_data = from_json_togeopd(data)
     if len(soil_data) > 0:
         if k is not None and classifierOption is not None and soil_prop is not None:
             choroClassifier = open(interactiveMap(mx=soil_data, column=soil_prop, k=k, color_palette=colorPalette,   schema=classifierOption,
                                                   path=app.get_asset_url("map_claassifier.html"), tooltip=['DOMSOI', soil_prop])).read()
 
-        return choroClassifier, f"Map classifier to classify {soil_prop}"
+        return choroClassifier, f"Map classification by {soil_prop}"
     raise PreventUpdate
 
 # choroplethLayout = html.Div()

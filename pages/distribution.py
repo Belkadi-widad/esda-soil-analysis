@@ -10,7 +10,7 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 from app import app, soil_data
-from data import soil_properties, from_json_togeopd
+from data import soil_properties, from_json_togeopd, description_visualizations
 from components.card import GraphCard
 from graphs import Histogram, BoxPlot, ScatterPlot, BoxPlotMultipleY, CorrelationHeatMap
 from components.select_multiselection import selectMultiSelection
@@ -56,7 +56,7 @@ histo_params = dbc.Row([
                         value=20,
                         # debounce=True,
                         min=2,
-                        max=len(soil_data)
+                        max=len(soil_data), className="w-100"
                     )),
                 ],
             )
@@ -67,10 +67,8 @@ histo_params = dbc.Row([
 histo_soil_props = dbc.Col(
     children=[
         GraphCard(id="histo_soil_prop",
-                  title="Histogram",
-                  description="Histogram of soil property",
-                  #   graph=Histogram(
-                  #       df=soil_data, x=soil_properties[0]),
+                  title="Soil property Histogram",
+                  description=description_visualizations["histo_soil_prop"],
                   paramsComponent=histo_params
                   )
     ], width=12
@@ -110,8 +108,8 @@ boxplot_soil_prop_params = dbc.Row([
             dcc.RadioItems(
                 id="xaxis-column-prop-boxplot",
                 options=[
-                    {"label": i, "value": i}
-                    for i in ["CNT_FULLNAME", "DOMSOI", "None"]
+                    {"label": label, "value": value}
+                    for value, label in {"CNT_FULLNAME": "Country", "DOMSOI": "Dominant soil unit", "None": "None"}.items()
                 ],
                 value="CNT_FULLNAME",
                 className="radio-button"
@@ -123,8 +121,8 @@ boxplot_soil_prop_params = dbc.Row([
 boxplot_soil_prop = dbc.Col(
     children=[
         GraphCard(id="boxplot_soil_property",
-                  title="Box plot",
-                  description="Box plot of soil property",
+                  title="Soil property Box Plot",
+                  description=description_visualizations['boxplot_soil_property'],
                   #   graph=BoxPlot(df=soil_data, x=soil_data['CNT_FULLNAME'],
                   #                 y=soil_properties[0]),
                   paramsComponent=boxplot_soil_prop_params
@@ -164,8 +162,9 @@ boxplot_soil_properties_params = dbc.Row([
             dcc.RadioItems(
                 id="xaxis-column-props-boxplot",
                 options=[
-                    {"label": i, "value": i}
-                    for i in ["CNT_FULLNAME", "None"]
+                    {"label": label, "value": value}
+                    for value, label in {"CNT_FULLNAME": "Country",  "None": "None"}.items()
+
                 ],
                 value="CNT_FULLNAME",
                 className="radio-button"
@@ -178,10 +177,8 @@ boxplot_soil_properties_params = dbc.Row([
 boxplot_soil_properties = dbc.Col(
     children=[
         GraphCard(id="boxplot_soil_properties",
-                  title="Box plot",
-                  description="Box plot of soil properties",
-                  #   graph=BoxPlotMultipleY(
-                  #       df=soil_data, y_columns=soil_properties[:3], x=soil_data['CNT_FULLNAME']),
+                  title="Soil propetries Box Plot",
+                  description=description_visualizations['boxplot_soil_properties'],
                   paramsComponent=boxplot_soil_properties_params
                   )
     ],  width=12
@@ -263,14 +260,14 @@ ca_params = dbc.Row([
 
 correlations = GraphCard(id="correlation-heatmap",
                          title="Correlation heatmap",
-                         description="",
+                         description=description_visualizations['correlation-heatmap'],
                          # graph= CorrelationHeatMap(
                          #      df=soil_data, target_col=soil_properties[0], cols=soil_properties[1:]),
                          paramsComponent=ca_params, column_width=4)
 
 scatter_plot = GraphCard(id="scatter-plot",
                          title="Scatter Plot",
-                         description="",
+                         description=description_visualizations['scatter-plot'],
                          #  graph=ScatterPlot(
                          #      df=soil_data, x=soil_properties[0], y=soil_properties[1]),
                          paramsComponent=scatter_params, column_width=8
