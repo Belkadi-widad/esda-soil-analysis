@@ -42,7 +42,7 @@ dataset_table_params = dbc.Col(
         html.Div(
             [
                 html.Div("Select Number of rows",
-                         style={"font-weight": "bold"}),
+                         style={"fontWeight": "bold"}),
                 html.Div(dcc.Input(
                     id="rows-input",
                     placeholder="Enter a value...",
@@ -83,7 +83,7 @@ dataset_overview = dbc.Row(
      dbc.Col(Card(id1="unique_fao", title="Unique FAOSOIL", value1=unique_fao)),
      dbc.Col(Card(id1="unique_dom", title="Unique DOMSOIL", value1=unique_dom)),
      dbc.Col(Card(id1="freq_DOM", title="Most frequent DOMSOIL", value1=freq_DOM))
-     ], style={'margin-bottom': '20px'}
+     ], style={'marginBottom': '20px'}
 )
 dataset_histograms = dbc.Row(
     [
@@ -99,7 +99,7 @@ dataset_histograms = dbc.Row(
 datasetLayout = html.Div(
     [
         dbc.Row(html.H3(["Dataset Overiew"]),
-                justify="center", style={'margin-bottom': '20px'}),
+                justify="center", style={'marginBottom': '20px'}),
         dataset_overview,
         dbc.Row(
             [

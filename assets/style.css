@@ -176,3 +176,9 @@ body {
   height: 170px;
   overflow-y: scroll;
 }
+
+iframe {
+  border-style: none;
+  width: 100%;
+  /* height: 120px; */
+}

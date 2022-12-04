@@ -31,13 +31,13 @@ def labelClusterLisaMap(lisa, significancePercent):
     return labels
 
 
-def plotLisaMaps(db, lisa, k, significancePercent, tooltip):
+def plotLisaMaps(db, lisa, k, significancePercent, tooltip, soil_prop):
 
     fig1 = open(interactiveMap(mx=db.assign(Is=lisa.Is), column="Is", tooltip=tooltip,
-                               k=k, color_palette="plasma", schema="Quantiles", path=app.get_asset_url("lisa-local.html"))).read()
+                               k=k, color_palette="plasma", schema="Quantiles", path=app.get_asset_url(f"lisa-local-{soil_prop}.html"))).read()
     labels = labelClusterLisaMap(lisa, 1)
     fig2 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url('clusters.html'))).read()
+                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'clusters-{soil_prop}.html'))).read()
     labels = pd.Series(
         # Assign 1 if significant, 0 otherwise
         1 * (lisa.p_sim < significancePercent),
@@ -46,11 +46,11 @@ def plotLisaMaps(db, lisa, k, significancePercent, tooltip):
     ).map({1: "Significant", 0: "Non-Significant"})
 
     fig3 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Paired", schema=None, path=app.get_asset_url("significance-map.html"))).read()
+                               k=2,  color_palette="Paired", schema=None, path=app.get_asset_url(f"significance-map-{soil_prop}.html"))).read()
 
     labels = labelClusterLisaMap(lisa, significancePercent)
     fig4 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url('cluster-map.html'))).read()
+                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'cluster-map--{soil_prop}.html'))).read()
     return fig1, fig2, fig3, fig4
 
 
@@ -79,14 +79,14 @@ moran_value_card = dbc.Col(
     Card(id1="moran-value", id_par="title-moran-value",
          title=f"Morans'I for {soil_prop}", value1="0.40"), style={"width": "19%"}, width='auto')
 moran_plot = dbc.Row(
-    html.Img(id="moran-plot-graphs", style={"width": "100%",
-                                            "margin": "15px 30px"
-                                            }),
+    html.Iframe(id="moran-plot-graphs", style={"width": "100%",
+                                               "margin": "15px 30px", "height": "457px"
+                                               }),
     className="justify-content-center")
 
 descComponent = dbc.Row([
     dbc.Col(description_visualizations['global-spatial-corr'], style={
-        "padding": "16px 42px", "text-align": "justify"}, width=9),
+        "padding": "16px 42px", "textAlign": "justify"}, width=9),
     moran_value_card])
 global_corr_row = MapCard(title=f"Global spatial autocorrelation for {soil_prop}", id_map="global-spatial-corr", paramsComponent=None, description="", column_width=12,
                           descComponent=descComponent, Map=html.Div(
@@ -154,7 +154,7 @@ params_maps = html.Div([
 correlationLayout = html.Div(
     [
         dbc.Row(html.H3(["Correlation"]),
-                justify="center", style={'margin-bottom': '20px'}),
+                justify="center", style={'marginBottom': '20px'}),
         params_maps,
         global_corr_row,
         local_corr_row
@@ -177,7 +177,7 @@ def display_corre_global(soil_prop_cond, data, k):
     if len(soil_data) > 0:
         moran, moransI, _ = calculateMoranSI(soil_data, soil_prop_cond, k=k)
         path = plotMoran(moran, path=app.get_asset_url(
-            f"global-graphs-{soil_prop_cond}-{k}.png"))
+            f"global-graphs-{soil_prop_cond}-{k}.html"))
         return round(moransI, 2), path
     return "Error occured",  None
 
@@ -202,7 +202,7 @@ def display_corre(significancePercent, k, prop, data):
             tooltip = ['DOMSOI', prop]
             lisa, lisaIs = calculateLISA(db, k, prop)
             local_lisa_map, scatter_quandrant_map, stat_signifance_map, significance_percent = plotLisaMaps(
-                db, lisa, k, significancePercent, tooltip)
+                db, lisa, k, significancePercent, tooltip, prop)
             return local_lisa_map, scatter_quandrant_map, stat_signifance_map, significance_percent
         return None, None, None, None
     return None, None, None, None

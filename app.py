@@ -3,13 +3,6 @@ import dash
 import dash_bootstrap_components as dbc
 from data import getDataset
 
-# app = DashProxy(__name__,
-#                 external_stylesheets=[dbc.themes.SANDSTONE],
-#                 meta_tags=[{"name": "viewport",
-#                             "content": "width=device-width, initial-scale=1"}], prevent_initial_callbacks=True, transforms=[MultiplexerTransform()])
-# set app variable with dash, set external style to bootstrap theme
-
-
 app = dash.Dash(
     __name__,
     external_stylesheets=[dbc.themes.SANDSTONE],

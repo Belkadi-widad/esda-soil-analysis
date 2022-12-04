@@ -4,8 +4,8 @@ from dash import dcc
 
 def selectMultiSelection(id="", label="", options=[], value="",
                          style={
-    "text-align": "center",
-    "font-size": "18px",
+    "textAlign": "center",
+    "fontSize": "18px",
         "width": "210px"}, labels=[]):
     if len(labels) == 0:
         labels = options

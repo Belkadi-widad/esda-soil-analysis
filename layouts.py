@@ -23,7 +23,7 @@ appMenu = html.Div(
         dbc.Row(
             [
                 dbc.Col(
-                    html.H4(style={"text-align": "center"},
+                    html.H4(style={"textAlign": "center"},
                             children="Select:"),
 
                 ),
@@ -36,8 +36,8 @@ appMenu = html.Div(
                 ),
                 dbc.Col(
                     html.P(
-                        style={"text-align": "center",
-                               "justify-self": "right", "marginBottom": "0px"},
+                        style={"textAlign": "center",
+                               "justifySelf": "right", "marginBottom": "0px"},
                         children="And/Or",
                     ), style={"margin": "auto"}),
                 dbc.Col(

@@ -35,8 +35,8 @@ nav = Navbar()
 
 # padding for the page content
 CONTENT_STYLE = {
-    "margin-left": "18rem",
-    "margin-right": "2rem",
+    "marginLeft": "18rem",
+    "marginRight": "2rem",
     'padding': '2rem 1rem'
 }
 

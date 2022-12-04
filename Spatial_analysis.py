@@ -10,7 +10,9 @@ import numpy
 import matplotlib.pyplot as plt
 import mapclassify
 import folium
-
+import base64
+from io import BytesIO
+import os
 # Graphics
 import matplotlib.pyplot as plt
 from splot.esda import plot_moran
@@ -192,31 +194,33 @@ def plot_scheme(mx, schema, soil_prop, color_palette="YlGn"):
     return ax
 
 
-def BoxMap(mx, soil_prop):
-    bp = BoxPlot(prop=soil_prop)
-    if len(bp.bins) == 5:
-        legends = [f'Lower outlier : ({bp.counts[0]}) (-inf , {bp.bins[0]:.2f}]', f'< 25% : ({bp.counts[1]}) ({bp.bins[0]:.2f} , {bp.bins[1]:.2f}]', f'25 % - 50% ({bp.counts[2]}) ({bp.bins[1]:.2f} , {bp.bins[2]:.2f}]',
-                   f' 50% - 75% ({bp.counts[3]}) ({bp.bins[2]:.2f}, {bp.bins[3]:.2f}]', f' >75% ({bp.counts[4]}) ({bp.bins[3]:.2f} , {bp.bins[4]:.2f}]', f'Upper outlier (0) ({bp.bins[4]:.2f} , +inf)']
-    else:
-        legends = [f'Lower outlier : ({bp.counts[0]}) (-inf , {bp.bins[0]:.2f}]', f'< 25% : ({bp.counts[1]}) ({bp.bins[0]:.2f} , {bp.bins[1]:.2f}]', f'25 % - 50% ({bp.counts[2]}) ({bp.bins[1]:.2f} , {bp.bins[2]:.2f}]',
-                   f' 50% - 75% ({bp.counts[3]}) ({bp.bins[2]:.2f}, {bp.bins[3]:.2f}]', f' >75% ({bp.counts[4]}) ({bp.bins[3]:.2f} , {bp.bins[4]:.2f}]', f'Upper outlier ({bp.counts[5]}) ({bp.bins[4]:.2f} , {bp.bins[5]:.2f}]']
+def BoxMap(mx, soil_prop, path='assets/boxmap.html'):
 
-    m = mx.explore(
-        column=soil_prop,  # make choropleth based on "BoroName" column
-        scheme='BoxPlot',  # use mapclassify's natural breaks scheme
-        legend=True,  # show legend
-        tooltip=soil_properties,
-        k=6,  # use 10 bins
-        cmap='viridis_r',
-        # do not use colorbar
-        legend_kwds=dict(colorbar=False, labels=legends),
-        name="CNT_FULLNAME"  # name of the layer in the map
-    )
-    # folium.TileLayer('Stamen Toner', control=True).add_to(
-    #     m)  # use folium to add alternative tiles
-    # folium.LayerControl().add_to(m)  # use folium to add layer control
-    m.save('assets/boxmap.html')
-    return './assets/boxmap.html'
+    if os.path.exists(f".{path}") == False:
+        bp = BoxPlot(prop=soil_prop)
+        if len(bp.bins) == 5:
+            legends = [f'Lower outlier : ({bp.counts[0]}) (-inf , {bp.bins[0]:.2f}]', f'< 25% : ({bp.counts[1]}) ({bp.bins[0]:.2f} , {bp.bins[1]:.2f}]', f'25 % - 50% ({bp.counts[2]}) ({bp.bins[1]:.2f} , {bp.bins[2]:.2f}]',
+                       f' 50% - 75% ({bp.counts[3]}) ({bp.bins[2]:.2f}, {bp.bins[3]:.2f}]', f' >75% ({bp.counts[4]}) ({bp.bins[3]:.2f} , {bp.bins[4]:.2f}]', f'Upper outlier (0) ({bp.bins[4]:.2f} , +inf)']
+        else:
+            legends = [f'Lower outlier : ({bp.counts[0]}) (-inf , {bp.bins[0]:.2f}]', f'< 25% : ({bp.counts[1]}) ({bp.bins[0]:.2f} , {bp.bins[1]:.2f}]', f'25 % - 50% ({bp.counts[2]}) ({bp.bins[1]:.2f} , {bp.bins[2]:.2f}]',
+                       f' 50% - 75% ({bp.counts[3]}) ({bp.bins[2]:.2f}, {bp.bins[3]:.2f}]', f' >75% ({bp.counts[4]}) ({bp.bins[3]:.2f} , {bp.bins[4]:.2f}]', f'Upper outlier ({bp.counts[5]}) ({bp.bins[4]:.2f} , {bp.bins[5]:.2f}]']
+
+        m = mx.explore(
+            column=soil_prop,  # make choropleth based on "BoroName" column
+            scheme='BoxPlot',  # use mapclassify's natural breaks scheme
+            legend=True,  # show legend
+            tooltip=soil_properties,
+            k=6,  # use 10 bins
+            cmap='viridis_r',
+            # do not use colorbar
+            legend_kwds=dict(colorbar=False, labels=legends),
+            name="CNT_FULLNAME"  # name of the layer in the map
+        )
+        # folium.TileLayer('Stamen Toner', control=True).add_to(
+        #     m)  # use folium to add alternative tiles
+        # folium.LayerControl().add_to(m)  # use folium to add layer control
+        m.save(path)
+    return f'./{path}'
 
 
 # In[] #Global spatial autocorrelation
@@ -235,10 +239,37 @@ def calculateMoranSI(db, prop,  k=8):
     return moran, moransI, p_sim
 
 
-def plotMoran(moranObjct, path="global-scatter.png"):
-    plot = plot_moran(moranObjct)
-    # plot[0].save(path)
-    plt.savefig(f".{path}")
+def plotMoran(moranObjct, path="global-scatter.html"):
+
+    if os.path.exists(f".{path}") == False:
+        plot = plot_moran(moranObjct)
+        # plot[0].save(path)
+        # plt.savefig(f".{path}")
+        #fig = plt.figure()
+        tmpfile = BytesIO()
+        plt.savefig(tmpfile, format='png')
+        encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+        print(path)
+        f = open(f".{path}", "x+")
+
+        html = f'''<html>
+            <head>
+            <title>HTML File</title>
+            </head> 
+            <body>
+            <img src='data:image/png;base64,{encoded}' style="width: 100%;">
+            </body>
+            </html>'''
+        print(html)
+        # writing the code in   to the file
+        # f.write(html)
+
+        # close the file
+        # f.close()
+        with open(f".{path}", 'w') as f:
+            print(path)
+            f.write(html)
+
     return path
 
 

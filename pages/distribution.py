@@ -23,8 +23,8 @@ histo_params = dbc.Row([
                 "Select the soil property",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.Dropdown(
@@ -45,8 +45,8 @@ histo_params = dbc.Row([
                         "Select Number of bins",
                         className="control_label",
                         style={
-                            "font-weight": "bold",
-                            "text-align": "center",
+                            "fontWeight": "bold",
+                            "textAlign": "center",
                         },
                     ),
                     html.Div(dcc.Input(
@@ -81,8 +81,8 @@ boxplot_soil_prop_params = dbc.Row([
                 "Select the soil property",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.Dropdown(
@@ -101,8 +101,8 @@ boxplot_soil_prop_params = dbc.Row([
                 "Select tha axis column",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.RadioItems(
@@ -137,13 +137,13 @@ boxplot_soil_properties_params = dbc.Row([
                 "Select the soil properties",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             selectMultiSelection(id="yaxis-columns-props-boxplot", label="Soil properties", options=['All'] + soil_properties, value=soil_properties[:4], style={
-                "text-align": "center",
-                "font-size": "18px",
+                "textAlign": "center",
+                "fontSize": "18px",
                 # "width": "210px",
                 # "padding-left": "61px"
             }),
@@ -155,8 +155,8 @@ boxplot_soil_properties_params = dbc.Row([
                 "Select tha axis column",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.RadioItems(
@@ -195,8 +195,8 @@ scatter_params = dbc.Row([
                 "Select the soil property in x-axis",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.Dropdown(
@@ -215,8 +215,8 @@ scatter_params = dbc.Row([
                 "Select the soil property in y-axis",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.Dropdown(
@@ -238,8 +238,8 @@ ca_params = dbc.Row([
                 "Select the soil property",
                 className="control_label",
                 style={
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             dcc.Dropdown(
@@ -280,7 +280,7 @@ correlation_plots = html.Div(
 distibutionLayout = html.Div(
     [
         dbc.Row(html.H3(["Data Distribution Overiew"]),
-                justify="center", style={'margin-bottom': '20px'}),
+                justify="center", style={'marginBottom': '20px'}),
         histo_boxplot,
         correlation_plots
     ]

@@ -105,7 +105,7 @@ choroplethLayout = html.Div(
     [
 
         dbc.Row(html.H3(["Chotopleth maps"]),
-                justify="center", style={'margin-bottom': '20px'}),
+                justify="center", style={'marginBottom': '20px'}),
         all_params,
         overviewMaps_row,
         BoxMap_row,
@@ -130,9 +130,10 @@ def display_choropleths(soil_prop, data):
     soil_data = from_json_togeopd(data)
     if len(soil_data) > 0:
         choroSoilProp = open(interactiveMap(mx=soil_data, column=soil_prop, tooltip=[
-            'DOMSOI', soil_prop], path=app.get_asset_url("soil-analysis.html"))).read()
+            'DOMSOI', soil_prop], path=app.get_asset_url(f"soil-analysis-{soil_prop}.html"))).read()
         title_choro_coil = f"{soil_prop} Distribution"
-        boxMap = open(BoxMap(mx=soil_data, soil_prop=soil_prop)).read()
+        boxMap = open(BoxMap(mx=soil_data, soil_prop=soil_prop,
+                      path=f'assets/boxmap_{soil_prop}.html')).read()
         boxPlot = BoxPlot(df=soil_data, x=soil_data['CNT_FULLNAME'],
                           y=soil_prop)
         title_box_map = f"Box map of {soil_prop}"
@@ -157,7 +158,7 @@ def display_map_clasifier(soil_prop, classifierOption, k, colorPalette, data):
     if len(soil_data) > 0:
         if k is not None and classifierOption is not None and soil_prop is not None:
             choroClassifier = open(interactiveMap(mx=soil_data, column=soil_prop, k=k, color_palette=colorPalette,   schema=classifierOption,
-                                                  path=app.get_asset_url("map_claassifier.html"), tooltip=['DOMSOI', soil_prop])).read()
+                                                  path=app.get_asset_url(f"map_claassifier_{soil_prop}_{classifierOption}_{k}_{colorPalette}.html"), tooltip=['DOMSOI', soil_prop])).read()
 
         return choroClassifier, f"Map classification by {soil_prop}"
     raise PreventUpdate

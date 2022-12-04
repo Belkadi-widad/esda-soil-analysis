@@ -36,7 +36,7 @@ def SideBar():
         "bottom": 0,
         "width": "16rem",
         "padding": "2rem 1rem",
-        "background-color": "#f8f9fa",
+        "backgroundColor": "#f8f9fa",
     }
 
     menu_items.insert(0, {"title": "Home",

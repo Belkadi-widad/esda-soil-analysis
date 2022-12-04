@@ -10,19 +10,19 @@ def Card(id1="", id2="", id_par="", title="", value1="", value2="",  className="
                 title,
                 id=id_par,
                 style={
-                    "text-align": "center",
-                    "font-weight": "bold",
+                    "textAlign": "center",
+                    "fontWeight": "bold",
                 },
             ),
             html.P(
                 value1,
                 id=id1,
-                style={"text-align": "center"},
+                style={"textAlign": "center"},
             ),
             html.P(
                 value2,
                 id=id2,
-                style={"text-align": "center"},
+                style={"textAlign": "center"},
             ),
         ],
         className=className,
@@ -40,7 +40,7 @@ def GraphCard(id, title, description, paramsComponent, graph=None, column_width=
         descComponent = html.P(
             description,
             className="control_label",
-            style={"text-align": "justify", "text-align": "center"},
+            style={"textAlign": "justify", "textAlign": "center"},
         )
     return dbc.Col(
         # cor_behav,
@@ -48,9 +48,9 @@ def GraphCard(id, title, description, paramsComponent, graph=None, column_width=
             html.H4(
                 title,
                 style={
-                    "margin-top": "0",
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "marginTop": "0",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             descComponent,
@@ -71,8 +71,8 @@ def MapCard(title, description, Map,  column_width='auto', paramsComponent=None,
         descComponent = html.P(
             description,
             className="control_label",
-            style={"text-align": "justify",
-                   "text-align": "center", "marginBottom": "10px"},
+            style={"textAlign": "justify",
+                   "textAlign": "center", "marginBottom": "10px"},
         )
     return dbc.Col(
         # cor_behav,
@@ -81,9 +81,9 @@ def MapCard(title, description, Map,  column_width='auto', paramsComponent=None,
                 id="title-" + id_map,
                 children=title,
                 style={
-                    "margin-top": "0",
-                    "font-weight": "bold",
-                    "text-align": "center",
+                    "marginTop": "0",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
                 },
             ),
             descComponent,
