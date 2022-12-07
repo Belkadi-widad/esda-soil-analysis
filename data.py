@@ -239,9 +239,10 @@ def getDataset(path='./data/spatial_dataset_all_maghreb.csv', countries=countrie
         geometry=gpd.GeoSeries.from_wkt(df_maghreb_prop["geometry"]),
         crs="EPSG:4326",
     )
-
+    cp_union = cp_union.loc[:, ~cp_union.columns.str.contains('^Unnamed')]
     cp_union = cp_union[(cp_union['CNT_FULLNAME'].isin(
         countries)) & (cp_union['DOMSOI'].isin(domSoils))]
+
     return cp_union
 
 

@@ -87,9 +87,9 @@ dataset_overview = dbc.Row(
 )
 dataset_histograms = dbc.Row(
     [
-        GraphCard(id="histo_country", title="Breakdown by Countries", description="", graph=Histogram(
+        GraphCard(id="histo_country", title="Breakdown by DOMSOI", description="", graph=Histogram(
             soil_data, x="DOMSOI", sorted='total descending'), paramsComponent=None,  col_style={'width': '48%'}),
-        GraphCard(id="histo_dom", paramsComponent=None, title="Breakdown by DOMSOI", description="",
+        GraphCard(id="histo_dom", paramsComponent=None, title="Breakdown by Countries", description="",
                   graph=Histogram(soil_data, order_labels=["ALGERIA",
                                                            "MOROCCO", "TUNISIA", "LIBYA", "MAURITANIA"], sorted='total descending'),  col_style={'width': '48%'})
     ]

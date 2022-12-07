@@ -101,19 +101,19 @@ local_corr_row = MapCard(title=f"Local spatial autocorrelation for {soil_prop}",
                              [
                                dbc.Col([
                                    html.H5("Local statistics", style={
-                                       "textAlign": "center"}),
+                                       "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="local-lisa-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/lisa-local.html").read())], width=6),
+                                               width='100%',  height='450px', srcDoc=open("./assets/lisa-local.html").read())], width=6, style={'marginBottom': '20px'}),
                                dbc.Col([html.H5("Scatter quadrant", style={
-                                   "textAlign": "center"}),
+                                   "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="scatter-quadrant-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/clusters.html").read())], width=6),
+                                               width='100%',  height='450px', srcDoc=open("./assets/clusters.html").read())], width=6, style={'marginBottom': '20px'}),
                                dbc.Col([html.H5("Statistical significance", style={
-                                   "textAlign": "center"}),
+                                   "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="statistical-significance-map",
                                                width='100%',  height='450px', srcDoc=open("./assets/significance-map.html").read())], width=6),
                                dbc.Col([html.H5("Moran cluster map", style={
-                                   "textAlign": "center"}),
+                                   "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="moran-cluster-map",
                                                width='100%',  height='450px', srcDoc=open("./assets/cluster-map.html").read())], width=6)
                              ]
@@ -193,7 +193,7 @@ def display_corre_global(soil_prop_cond, data, k):
     Input('soil-data-value', 'data')
 )
 def display_corre(significancePercent, k, prop, data):
-    if data is None or len(data) == 0:
+    if data is None or len(data) == 0 or significancePercent is None:
         return None, None, None, None
     soil_data = from_json_togeopd(data)
     if len(soil_data) > 0:
@@ -202,7 +202,7 @@ def display_corre(significancePercent, k, prop, data):
             tooltip = ['DOMSOI', prop]
             lisa, lisaIs = calculateLISA(db, k, prop)
             local_lisa_map, scatter_quandrant_map, stat_signifance_map, significance_percent = plotLisaMaps(
-                db, lisa, k, significancePercent, tooltip, prop)
+                db, lisa, k, float(significancePercent), tooltip, prop)
             return local_lisa_map, scatter_quandrant_map, stat_signifance_map, significance_percent
         return None, None, None, None
     return None, None, None, None
