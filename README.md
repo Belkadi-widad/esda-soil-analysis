@@ -10,7 +10,7 @@ The applicaiton offer visualizations, maps and graphs to show the characteristic
 
 ## The Data
 
-            The data used in this application was retrieved from [FAO.com](https://www.fao.org/soils-portal/soil-survey/soil-maps-and-databases/faounesco-soil-map-of-the-world/en/).
+The data used in this application was retrieved from [FAO.com](https://www.fao.org/soils-portal/soil-survey/soil-maps-and-databases/faounesco-soil-map-of-the-world/en/).
 
 ## Dependencies
 
