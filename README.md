@@ -25,6 +25,5 @@ The data used in this application was retrieved from [FAO.com](https://www.fao.o
 - matplotlib
 - pandas==1.5.0
 
-## The Data
 
 ### Application deployed on Heroku [here]().
