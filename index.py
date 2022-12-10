@@ -86,4 +86,4 @@ app.layout = index()
 # Call app server
 if __name__ == "__main__":
     # set debug to false when deploying app
-    app.run_server(debug=True,  port=8000,  dev_tools_hot_reload=False)
+    app.run_server(debug=False,  port=8000,  dev_tools_hot_reload=False)

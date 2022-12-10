@@ -60,7 +60,7 @@ map_classifier_params = dbc.Row(
             )        # inline=True
             , width='4'),
         dbc.Col(dmc.NumberInput(
-            label="Number of neighbors",
+            label="Number of classes",
             description=f"From 2 to {len(soil_data)}",
             id="k",
             value=5,
@@ -158,7 +158,7 @@ def display_map_clasifier(soil_prop, classifierOption, k, colorPalette, data):
     if len(soil_data) > 0:
         if k is not None and classifierOption is not None and soil_prop is not None:
             choroClassifier = open(interactiveMap(mx=soil_data, column=soil_prop, k=k, color_palette=colorPalette,   schema=classifierOption,
-                                                  path=app.get_asset_url(f"map_claassifier_{soil_prop}_{classifierOption}_{k}_{colorPalette}.html"), tooltip=['DOMSOI', soil_prop])).read()
+                                                  path=app.get_asset_url(f"map_claassifier.html"), tooltip=['DOMSOI', soil_prop])).read()
 
         return choroClassifier, f"Map classification by {soil_prop}"
     raise PreventUpdate

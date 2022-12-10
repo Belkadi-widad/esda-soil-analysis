@@ -34,10 +34,10 @@ def labelClusterLisaMap(lisa, significancePercent):
 def plotLisaMaps(db, lisa, k, significancePercent, tooltip, soil_prop):
 
     fig1 = open(interactiveMap(mx=db.assign(Is=lisa.Is), column="Is", tooltip=tooltip,
-                               k=k, color_palette="plasma", schema="Quantiles", path=app.get_asset_url(f"lisa-local-{soil_prop}.html"))).read()
+                               k=k, color_palette="plasma", schema="Quantiles", path=app.get_asset_url(f"lisa-local.html"))).read()
     labels = labelClusterLisaMap(lisa, 1)
     fig2 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'clusters-{soil_prop}.html'))).read()
+                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'clusters.html'))).read()
     labels = pd.Series(
         # Assign 1 if significant, 0 otherwise
         1 * (lisa.p_sim < significancePercent),
@@ -46,11 +46,11 @@ def plotLisaMaps(db, lisa, k, significancePercent, tooltip, soil_prop):
     ).map({1: "Significant", 0: "Non-Significant"})
 
     fig3 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Paired", schema=None, path=app.get_asset_url(f"significance-map-{soil_prop}.html"))).read()
+                               k=2,  color_palette="Paired", schema=None, path=app.get_asset_url(f"significance-map.html"))).read()
 
     labels = labelClusterLisaMap(lisa, significancePercent)
     fig4 = open(interactiveMap(db.assign(cluster=labels), column="cluster", tooltip=tooltip,
-                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'cluster-map--{soil_prop}.html'))).read()
+                               k=2,  color_palette="Set1", schema=None, path=app.get_asset_url(f'cluster-map.html'))).read()
     return fig1, fig2, fig3, fig4
 
 
@@ -103,19 +103,19 @@ local_corr_row = MapCard(title=f"Local spatial autocorrelation for {soil_prop}",
                                    html.H5("Local statistics", style={
                                        "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="local-lisa-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/lisa-local.html").read())], width=6, style={'marginBottom': '20px'}),
+                                               width='100%',  height='450px')], width=6, style={'marginBottom': '20px'}),
                                dbc.Col([html.H5("Scatter quadrant", style={
                                    "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="scatter-quadrant-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/clusters.html").read())], width=6, style={'marginBottom': '20px'}),
+                                               width='100%',  height='450px')], width=6, style={'marginBottom': '20px'}),
                                dbc.Col([html.H5("Statistical significance", style={
                                    "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="statistical-significance-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/significance-map.html").read())], width=6),
+                                               width='100%',  height='450px')], width=6),
                                dbc.Col([html.H5("Moran cluster map", style={
                                    "textAlign": "center", 'marginBottom': '20px'}),
                                    html.Iframe(id="moran-cluster-map",
-                                               width='100%',  height='450px', srcDoc=open("./assets/cluster-map.html").read())], width=6)
+                                               width='100%',  height='450px')], width=6)
                              ]
 
 )
@@ -164,7 +164,7 @@ correlationLayout = html.Div(
 
 @ app.callback(
     [Output("moran-value", "children"),
-     Output("moran-plot-graphs", "src")
+     Output("moran-plot-graphs", "srcDoc")
      ],
     [Input("soil-prop-corr", "value"),
      Input('soil-data-value', 'data'),
@@ -177,8 +177,9 @@ def display_corre_global(soil_prop_cond, data, k):
     if len(soil_data) > 0:
         moran, moransI, _ = calculateMoranSI(soil_data, soil_prop_cond, k=k)
         path = plotMoran(moran, path=app.get_asset_url(
-            f"global-graphs-{soil_prop_cond}-{k}.html"))
-        return round(moransI, 2), path
+            f"global-graphs.html"))
+        print('je suis dans display', path)
+        return round(moransI, 2), open(f".{path}").read()
     return "Error occured",  None
 
 
