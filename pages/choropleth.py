@@ -104,7 +104,7 @@ all_params = dbc.Row(
 choroplethLayout = html.Div(
     [
 
-        dbc.Row(html.H3(["Chotopleth maps"]),
+        dbc.Row(html.H3(["Choropleth maps"]),
                 justify="center", style={'marginBottom': '20px'}),
         all_params,
         overviewMaps_row,

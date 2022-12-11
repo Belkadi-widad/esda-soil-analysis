@@ -30,7 +30,7 @@ homeLayout = html.Div(
             The data used in this application was retrieved from [FAO.com](https://www.fao.org/soils-portal/soil-survey/soil-maps-and-databases/faounesco-soil-map-of-the-world/en/).
 
         """, style={'marginBottom': '30px'}),
-     Card(id1="", title="Publication", value1="Authors: Widad Hassina Belkadi, Habiba Drias, Yassine Drias",
+     Card(id1="", title="Publication", value1="Authors: Widad Hassina Belkadi, Yassine Drias, Habiba Drias",
           value2="Title : A Data Warehouse for spatial soil data analysis and mining: Application to the Maghreb region",  className="pretty_container")
      ],
     className="home",
